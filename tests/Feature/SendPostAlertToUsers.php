@@ -9,9 +9,7 @@ use App\Models\Subscription;
 use App\Models\Users;
 use App\Models\Websites;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use App\SendEmailToUser;
-use Illuminate\Queue\Jobs\Job;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Queue;
@@ -40,7 +38,7 @@ class SendPostAlertToUsers extends TestCase
             'description' => 'test description'
         ]);
     }
-    public function test_send_available_post_to_users(): void
+    public function test_SendAvailablePostToUsers(): void
     {
         SendEmailToUser::sendEmailNotification();
 
@@ -61,17 +59,17 @@ class SendPostAlertToUsers extends TestCase
         });
     }
 
-    public function test_not_sending_duplicate_emails(): void{
+    public function test_NotSendingDuplicateEmails(): void{
         for ($x = 0; $x <= 10; $x++) {
             SendEmailToUser::sendEmailNotification();
         }
 
-        $subscription_count = DB::table('email_logs')->get()->count();
-        $this->assertEquals(1, $subscription_count);
+        $subscriptionCount = DB::table('email_logs')->get()->count();
+        $this->assertEquals(1, $subscriptionCount);
         Mail::assertSent(SendPostMail::class,1);
     }
 
-    public function test_send_emails_through_queue(): void
+    public function test_SendEmailsThroughQueue(): void
     {
         Queue::fake();
         SendEmailToUser::sendEmailNotification();

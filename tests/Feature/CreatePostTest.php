@@ -10,7 +10,7 @@ use Tests\TestCase;
 class CreatePostTest extends TestCase
 {
     use RefreshDatabase;
-    public function test_store_new_post()
+    public function test_StoreNewPost()
     {
         $postList = Posts::factory()->create();
         $this->postJson(

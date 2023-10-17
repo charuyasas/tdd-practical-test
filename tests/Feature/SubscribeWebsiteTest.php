@@ -9,7 +9,7 @@ use Tests\TestCase;
 
 class SubscribeWebsiteTest extends TestCase
 {
-    public function test_user_subscribe_website(): void
+    public function test_UserSubscribeWebsite(): void
     {
         $subscribe = Subscription::factory()->create();
         $this->postJson(
