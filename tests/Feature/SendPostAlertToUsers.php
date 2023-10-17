@@ -58,7 +58,7 @@ class SendPostAlertToUsers extends TestCase
             'user_id' => $this->posts->id
         ]);
 
-        Mail::assertSent(SendPostMail::class, function (SendPostMail $mail){
+        Mail::assertQueued(SendPostMail::class, function (SendPostMail $mail){
             $this->assertEquals($mail->subject, $this->posts->title);
             $this->assertEquals($mail->body, $this->posts->description);
             return $mail->assertTo($this->user->email);
@@ -73,14 +73,6 @@ class SendPostAlertToUsers extends TestCase
 
         $subscriptionCount = EmailLogs::all()->count();
         $this->assertEquals(1, $subscriptionCount);
-        Mail::assertSent(SendPostMail::class,1);
-    }
-
-    /** @test */
-    public function send_emails_through_queue(): void
-    {
-        Queue::fake();
-        SendEmailToUser::sendEmailNotification();
-        Queue::assertPushed(SendPostEmailJob::class, 1);
+        Mail::assertQueued(SendPostMail::class,1);
     }
 }
