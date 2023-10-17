@@ -12,12 +12,14 @@ class SubscribeWebsiteTest extends TestCase
     public function test_user_subscribe_website(): void
     {
         $subscribe = Subscription::factory()->create();
-        $this->postJson(route('subscribe.store'),
+        $this->postJson(
+            route('subscribe.store'),
             [
                 'website_id' => $subscribe->website_id,
                 'user_id' => $subscribe->user_id
             ])->assertCreated()->json();
-        $this->assertDatabaseHas('subscriptions',
+        $this->assertDatabaseHas(
+            'subscriptions',
             [
                 'website_id' => $subscribe->website_id,
                 'user_id' => $subscribe->user_id

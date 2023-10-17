@@ -20,6 +20,7 @@ use Tests\TestCase;
 class SendPostAlertToUsers extends TestCase
 {
     use RefreshDatabase;
+
     private $user,$website,$posts;
     public function setUp(): void
     {
@@ -43,11 +44,11 @@ class SendPostAlertToUsers extends TestCase
     {
         SendEmailToUser::sendEmailNotification();
 
-        $subscription_count = DB::table('subscriptions')
+        $subscriptionCount = DB::table('subscriptions')
             ->where('website_id',$this->website->id)
             ->where('user_id',$this->user->id)
             ->get()->count();
-        $this->assertEquals(1, $subscription_count);
+        $this->assertEquals(1, $subscriptionCount);
         $this->assertDatabaseHas('email_logs', [
             'post_id' => $this->user->id,
             'user_id' => $this->posts->id

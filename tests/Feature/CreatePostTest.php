@@ -13,13 +13,15 @@ class CreatePostTest extends TestCase
     public function test_store_new_post()
     {
         $postList = Posts::factory()->create();
-        $this->postJson(route('posts.store'),
+        $this->postJson(
+            route('posts.store'),
             [
                 'website_id' => $postList->website_id,
                 'title' => $postList->title,
                 'description' => $postList->description
             ])->assertCreated()->json();
-        $this->assertDatabaseHas('posts',
+        $this->assertDatabaseHas(
+            'posts',
             [
                 'website_id' => $postList->website_id,
                 'title' => $postList->title,
