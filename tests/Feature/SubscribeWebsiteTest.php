@@ -11,6 +11,7 @@ class SubscribeWebsiteTest extends TestCase
 {
     public function test_UserSubscribeWebsite(): void
     {
+        $this->withoutExceptionHandling();
         $subscribe = Subscription::factory()->create();
         $this->postJson(
             route('subscribe.store'),

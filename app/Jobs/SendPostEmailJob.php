@@ -26,9 +26,6 @@ class SendPostEmailJob implements ShouldQueue
         $this->email = $mail;
     }
 
-    /**
-     * Execute the job.
-     */
     public function handle(): void
     {
         Mail::to($this->email)->send(new SendPostMail($this->subject, $this->content));

@@ -4,13 +4,13 @@ namespace Tests\Feature;
 
 use App\Jobs\SendPostEmailJob;
 use App\Mail\SendPostMail;
+use App\Models\EmailLogs;
 use App\Models\Posts;
 use App\Models\Subscription;
 use App\Models\Users;
 use App\Models\Websites;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\SendEmailToUser;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Queue;
 use Tests\TestCase;
@@ -26,8 +26,13 @@ class SendPostAlertToUsers extends TestCase
 
         Mail::fake();
 
-        $this->user = Users::factory()->create(['name' => 'A', 'email' => 'abc@gmail.com']);
-        $this->website = Websites::factory()->create(['name' => 'B']);
+        $this->user = Users::factory()->create([
+            'name' => 'A',
+            'email' => 'abc@gmail.com'
+        ]);
+        $this->website = Websites::factory()->create([
+            'name' => 'B'
+        ]);
         Subscription::factory()->create([
             'website_id' => $this->website->id,
             'user_id' => $this->user->id
@@ -38,12 +43,13 @@ class SendPostAlertToUsers extends TestCase
             'description' => 'test description'
         ]);
     }
-    public function test_SendAvailablePostToUsers(): void
+
+    /** @test */
+    public function send_available_post_to_users(): void
     {
         SendEmailToUser::sendEmailNotification();
 
-        $subscriptionCount = DB::table('subscriptions')
-            ->where('website_id',$this->website->id)
+        $subscriptionCount = Subscription::where('website_id',$this->website->id)
             ->where('user_id',$this->user->id)
             ->get()->count();
         $this->assertEquals(1, $subscriptionCount);
@@ -59,17 +65,19 @@ class SendPostAlertToUsers extends TestCase
         });
     }
 
-    public function test_NotSendingDuplicateEmails(): void{
+    /** @test */
+    public function not_sending_duplicate_emails(): void{
         for ($x = 0; $x <= 10; $x++) {
             SendEmailToUser::sendEmailNotification();
         }
 
-        $subscriptionCount = DB::table('email_logs')->get()->count();
+        $subscriptionCount = EmailLogs::all()->count();
         $this->assertEquals(1, $subscriptionCount);
         Mail::assertSent(SendPostMail::class,1);
     }
 
-    public function test_SendEmailsThroughQueue(): void
+    /** @test */
+    public function send_emails_through_queue(): void
     {
         Queue::fake();
         SendEmailToUser::sendEmailNotification();

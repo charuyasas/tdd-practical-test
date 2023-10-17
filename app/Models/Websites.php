@@ -8,5 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Websites extends Model
 {
     use HasFactory;
+
     protected $fillable = ['name'];
 }
