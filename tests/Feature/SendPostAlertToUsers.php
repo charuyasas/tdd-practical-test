@@ -21,9 +21,7 @@ class SendPostAlertToUsers extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-
         Mail::fake();
-
         $this->user = Users::factory()->create([
             'name' => 'A',
             'email' => 'abc@gmail.com'
@@ -46,7 +44,6 @@ class SendPostAlertToUsers extends TestCase
     public function send_available_post_to_users(): void
     {
         SendEmailToUser::sendEmailNotification();
-
         $subscriptionCount = Subscription::where('website_id',$this->website->id)
             ->where('user_id',$this->user->id)
             ->get()->count();
@@ -55,7 +52,6 @@ class SendPostAlertToUsers extends TestCase
             'post_id' => $this->user->id,
             'user_id' => $this->posts->id
         ]);
-
         Mail::assertQueued(SendPostMail::class, function (SendPostMail $mail){
             $this->assertEquals($mail->subject, $this->posts->title);
             $this->assertEquals($mail->body, $this->posts->description);

@@ -20,15 +20,19 @@ class SendEmailToUser
         if ($users->count() == 0) {
             return false;
         }
+
         if ($posts->count() == 0) {
             return false;
         }
+
         foreach ($posts as $post) {
             foreach ($users as $user) {
                 if ($user->website_id != $post->website_id){
                     continue;
                 }
+
                 $result = EmailLogs::where('post_id', $post->id)->where('user_id', $user->id)->get();
+
                 if ($result->count() == 0) {
                     $emailLogs=new EmailLogs();
                     $emailLogs->post_id = $post->id;
