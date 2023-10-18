@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Http\Requests\SubscribeWebsiteRequest;
+use Illuminate\Routing\Controller;
 
 class SubscribeWebsiteController extends Controller
 {
-    //
+    public static function store(SubscribeWebsiteRequest $request)
+    {
+        return (new \App\SubscribeWebsite())->storeUserSubscription($request->getSubscribeDTO());
+    }
 }

@@ -18,7 +18,7 @@ class CreatePostTest extends TestCase
         $this->postJson(
             route('posts.store'),
             [
-                'website_id' => $postList->website_id,
+                'websiteId' => $postList->website_id,
                 'title' => $postList->title,
                 'description' => $postList->description
             ])->assertCreated()->json();

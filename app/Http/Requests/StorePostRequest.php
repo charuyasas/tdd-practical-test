@@ -15,7 +15,7 @@ class StorePostRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'website_id' => 'required|int',
+            'websiteId' => 'required|int',
             'title' => 'required|string',
             'description' => 'required|string',
         ];
@@ -24,7 +24,7 @@ class StorePostRequest extends FormRequest
     public function getPostDTO()
     {
         return new PostDTO(
-            $this->website_id,
+            $this->websiteId,
             $this->title,
             $this->description
         );

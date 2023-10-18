@@ -5,7 +5,7 @@ namespace App\DTOs;
 class PostDTO
 {
     public function __construct(
-        public int $website_id,
+        public int $websiteId,
         public string $title,
         public string $description
     )

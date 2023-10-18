@@ -2,19 +2,16 @@
 
 namespace App;
 
+use App\DTOs\SubscribeDTO;
 use App\Models\Subscription;
-use Illuminate\Http\Request;
 
 class SubscribeWebsite
 {
-    public function store(Request $request){
-        $request->validate([
-            'website_id' => ['required'],
-            'user_id' => ['required']
-        ]);
+    public function storeUserSubscription(SubscribeDTO $subscribeDTO)
+    {
         $subscribe = new Subscription();
-        $subscribe->website_id = $request->website_id;
-        $subscribe->user_id = $request->user_id;
+        $subscribe->website_id = $subscribeDTO->websiteId;
+        $subscribe->user_id = $subscribeDTO->userId;
         $subscribe->save();
         return $subscribe;
     }
