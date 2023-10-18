@@ -4,9 +4,9 @@ namespace App;
 
 use App\Jobs\SendPostEmailJob;
 use App\Mail\SendPostMail;
-use App\Models\EmailLogs;
-use App\Models\Posts;
-use App\Models\Users;
+use App\Models\EmailLog;
+use App\Models\Post;
+use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 
@@ -14,8 +14,8 @@ class SendEmailToUser
 {
     public static function sendEmailNotification()
     {
-        $users = Users::join('subscriptions', 'subscriptions.user_id', '=', 'users.id')->get();
-        $posts = Posts::all();
+        $users = User::join('subscriptions', 'subscriptions.user_id', '=', 'users.id')->get();
+        $posts = Post::all();
 
         if ($users->count() == 0) {
             return false;
@@ -31,10 +31,10 @@ class SendEmailToUser
                     continue;
                 }
 
-                $result = EmailLogs::where('post_id', $post->id)->where('user_id', $user->id)->get();
+                $result = EmailLog::where('post_id', $post->id)->where('user_id', $user->id)->get();
 
                 if ($result->count() == 0) {
-                    $emailLogs=new EmailLogs();
+                    $emailLogs=new EmailLog();
                     $emailLogs->post_id = $post->id;
                     $emailLogs->user_id = $user->id;
                     $emailLogs->save();

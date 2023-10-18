@@ -3,11 +3,11 @@
 namespace Tests\Feature;
 
 use App\Mail\SendPostMail;
-use App\Models\EmailLogs;
-use App\Models\Posts;
+use App\Models\EmailLog;
+use App\Models\Post;
 use App\Models\Subscription;
-use App\Models\Users;
-use App\Models\Websites;
+use App\Models\User;
+use App\Models\Website;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\SendEmailToUser;
 use Illuminate\Support\Facades\Mail;
@@ -17,23 +17,26 @@ class SendPostAlertToUsers extends TestCase
 {
     use RefreshDatabase;
 
-    private $user,$website,$posts;
+    protected $user;
+    protected $website;
+    protected $posts;
+
     public function setUp(): void
     {
         parent::setUp();
         Mail::fake();
-        $this->user = Users::factory()->create([
+        $this->user = User::factory()->create([
             'name' => 'A',
             'email' => 'abc@gmail.com'
         ]);
-        $this->website = Websites::factory()->create([
+        $this->website = Website::factory()->create([
             'name' => 'B'
         ]);
         Subscription::factory()->create([
             'website_id' => $this->website->id,
             'user_id' => $this->user->id
         ]);
-        $this->posts = Posts::factory()->create([
+        $this->posts = Post::factory()->create([
             'website_id' => $this->website->id,
             'title' => 'test title',
             'description' => 'test description'
@@ -65,7 +68,7 @@ class SendPostAlertToUsers extends TestCase
             SendEmailToUser::sendEmailNotification();
         }
 
-        $subscriptionCount = EmailLogs::all()->count();
+        $subscriptionCount = EmailLog::all()->count();
         $this->assertEquals(1, $subscriptionCount);
         Mail::assertQueued(SendPostMail::class,1);
     }

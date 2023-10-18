@@ -2,7 +2,7 @@
 
 namespace Tests\Feature;
 
-use App\Models\Posts;
+use App\Models\Post;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -10,11 +10,11 @@ use Tests\TestCase;
 class CreatePostTest extends TestCase
 {
     use RefreshDatabase;
-    
+
     /** @test */
     public function store_new_post()
     {
-        $postList = Posts::factory()->create();
+        $postList = Post::factory()->make();
         $this->postJson(
             route('posts.store'),
             [
