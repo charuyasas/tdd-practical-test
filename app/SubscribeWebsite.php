@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 class SubscribeWebsite
 {
-    public static function store(Request $request){
+    public function store(Request $request){
         $request->validate([
             'website_id' => ['required'],
             'user_id' => ['required']
