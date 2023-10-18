@@ -30,7 +30,10 @@ class SendEmailToUser
                 }
                 $result = EmailLogs::where('post_id', $post->id)->where('user_id', $user->id)->get();
                 if ($result->count() == 0) {
-                    EmailLogs::create(['post_id' => $post->id, 'user_id' => $user->id]);
+                    $emailLogs=new EmailLogs();
+                    $emailLogs->post_id = $post->id;
+                    $emailLogs->user_id = $user->id;
+                    $emailLogs->save();
                     Mail::to($user->email)->queue(new SendPostMail($post->title, $post->description));
                 }else{
                     return false;

@@ -9,7 +9,10 @@ use Tests\TestCase;
 
 class SubscribeWebsiteTest extends TestCase
 {
-    public function test_UserSubscribeWebsite(): void
+    use RefreshDatabase;
+
+    /** @test */
+    public function test_user_subscribe_website(): void
     {
         $this->withoutExceptionHandling();
         $subscribe = Subscription::factory()->create();

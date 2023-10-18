@@ -2,7 +2,6 @@
 
 namespace Tests\Feature;
 
-use App\Jobs\SendPostEmailJob;
 use App\Mail\SendPostMail;
 use App\Models\EmailLogs;
 use App\Models\Posts;
@@ -12,7 +11,6 @@ use App\Models\Websites;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\SendEmailToUser;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Queue;
 use Tests\TestCase;
 
 class SendPostAlertToUsers extends TestCase

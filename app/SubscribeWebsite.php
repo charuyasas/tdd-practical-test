@@ -8,9 +8,14 @@ use Illuminate\Http\Request;
 class SubscribeWebsite
 {
     public static function store(Request $request){
-        return Subscription::create([
-            'website_id'=>$request->website_id,
-            'user_id'=>$request->user_id,
+        $request->validate([
+            'website_id' => ['required'],
+            'user_id' => ['required']
         ]);
+        $subscribe = new Subscription();
+        $subscribe->website_id = $request->website_id;
+        $subscribe->user_id = $request->user_id;
+        $subscribe->save();
+        return $subscribe;
     }
 }
