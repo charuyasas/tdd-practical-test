@@ -17,26 +17,26 @@ class SendPostAlertToUsers extends TestCase
 {
     use RefreshDatabase;
 
-    protected $user;
-    protected $website;
-    protected $posts;
+    private array $user;
+    private array $website;
+    private array $posts;
 
     public function setUp(): void
     {
         parent::setUp();
         Mail::fake();
-        $this->user = User::factory()->create([
+        $this->user = User::factory()->make([
             'name' => 'A',
             'email' => 'abc@gmail.com'
         ]);
-        $this->website = Website::factory()->create([
+        $this->website = Website::factory()->make([
             'name' => 'B'
         ]);
-        Subscription::factory()->create([
+        Subscription::factory()->make([
             'website_id' => $this->website->id,
             'user_id' => $this->user->id
         ]);
-        $this->posts = Post::factory()->create([
+        $this->posts = Post::factory()->make([
             'website_id' => $this->website->id,
             'title' => 'test title',
             'description' => 'test description'

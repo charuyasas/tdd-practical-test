@@ -12,29 +12,27 @@ class SendPostMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $subject;
-    public $body;
-
-    public function __construct($subject, $content)
+    public function __construct(private string $title, private string $content)
     {
-        $this->body = $content;
-        $this->subject = $subject;
     }
 
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: $this->subject,
+            subject: $this->title,
         );
     }
 
     public function content(): Content
     {
         return new Content(
-            view:'welcome'
+            view: 'email',
+            with: [
+                'message' => $this->content,
+            ]
         );
     }
-
+    
     public function attachments(): array
     {
         return [];
