@@ -2,7 +2,8 @@
 
 namespace App\Http\Requests;
 
-use App\DTOs\SubscribeDTO;
+
+use App\Commands\SubscribeUserCommand;
 use Illuminate\Foundation\Http\FormRequest;
 
 class SubscribeWebsiteRequest extends FormRequest
@@ -20,9 +21,9 @@ class SubscribeWebsiteRequest extends FormRequest
         ];
     }
 
-    public function getSubscribeDTO()
+    public function commandData()
     {
-        return new SubscribeDTO(
+        return new SubscribeUserCommand(
             $this->websiteId,
             $this->userId,
         );

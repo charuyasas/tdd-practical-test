@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests;
 
-use App\DTOs\PostDTO;
+use App\Commands\PostCommand;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StorePostRequest extends FormRequest
@@ -21,13 +21,13 @@ class StorePostRequest extends FormRequest
         ];
     }
 
-    public function getPostDTO()
+    public function commandData()
     {
-        return new PostDTO(
+        return new PostCommand(
             $this->websiteId,
             $this->title,
             $this->description
-        );
 
+        );
     }
 }

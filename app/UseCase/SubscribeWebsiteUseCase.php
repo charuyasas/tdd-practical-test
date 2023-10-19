@@ -1,17 +1,17 @@
 <?php
 
-namespace App;
+namespace App\UseCase;
 
-use App\DTOs\SubscribeDTO;
+use App\Commands\SubscribeUserCommand;
 use App\Models\Subscription;
 
-class SubscribeWebsite
+class SubscribeWebsiteUseCase
 {
-    public function storeUserSubscription(SubscribeDTO $subscribeDTO)
+    public function execute(SubscribeUserCommand $commandData)
     {
         $subscribe = new Subscription();
-        $subscribe->website_id = $subscribeDTO->websiteId;
-        $subscribe->user_id = $subscribeDTO->userId;
+        $subscribe->website_id = $commandData->websiteId;
+        $subscribe->user_id = $commandData->userId;
         $subscribe->save();
         return $subscribe;
     }

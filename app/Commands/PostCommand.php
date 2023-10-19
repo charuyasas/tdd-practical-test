@@ -1,8 +1,8 @@
 <?php
 
-namespace App\DTOs;
+namespace App\Commands;
 
-class PostDTO
+class PostCommand
 {
     public function __construct(
         public int $websiteId,

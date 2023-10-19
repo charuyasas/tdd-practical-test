@@ -1,8 +1,8 @@
 <?php
 
-namespace App\DTOs;
+namespace App\Commands;
 
-class SubscribeDTO
+class SubscribeUserCommand
 {
     public function __construct(
         public int    $websiteId,

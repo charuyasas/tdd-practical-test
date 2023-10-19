@@ -9,7 +9,7 @@ use App\Models\Subscription;
 use App\Models\User;
 use App\Models\Website;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use App\SendEmailToUser;
+use App\SendEmailToUserUseCase;
 use Illuminate\Support\Facades\Mail;
 use Tests\TestCase;
 
@@ -46,7 +46,7 @@ class SendPostAlertToUsers extends TestCase
     /** @test */
     public function send_available_post_to_users(): void
     {
-        SendEmailToUser::sendEmailNotification();
+        SendEmailToUserUseCase::sendEmailNotification();
 
         $subscriptionCount = Subscription::where('website_id', $this->website->id)
             ->where('user_id', $this->user->id)
@@ -68,7 +68,7 @@ class SendPostAlertToUsers extends TestCase
     public function not_sending_duplicate_emails(): void
     {
         for ($x = 0; $x <= 10; $x++) {
-            SendEmailToUser::sendEmailNotification();
+            SendEmailToUserUseCase::sendEmailNotification();
         }
 
         $subscriptionCount = EmailLog::all()->count();

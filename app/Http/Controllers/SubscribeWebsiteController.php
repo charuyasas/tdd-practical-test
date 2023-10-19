@@ -9,6 +9,6 @@ class SubscribeWebsiteController extends Controller
 {
     public static function store(SubscribeWebsiteRequest $request)
     {
-        return (new \App\SubscribeWebsite())->storeUserSubscription($request->getSubscribeDTO());
+        return (new \App\UseCase\SubscribeWebsiteUseCase)->execute($request->commandData());
     }
 }

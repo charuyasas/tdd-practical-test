@@ -1,19 +1,19 @@
 <?php
 
-namespace App;
+namespace App\UseCase;
 
-use App\DTOs\PostDTO;
+use App\Commands\PostCommand;
 use App\Http\Requests\StorePostRequest;
 use App\Models\Post;
 
-class StoreWebsitePost
+class StoreWebsiteUseCase
 {
-    public function storeWebsitePost(PostDTO $postDTO)
+    public function execute(PostCommand $commandData)
     {
         $posts = new Post();
-        $posts->website_id = $postDTO->websiteId;
-        $posts->title = $postDTO->title;
-        $posts->description = $postDTO->description;
+        $posts->website_id = $commandData->websiteId;
+        $posts->title = $commandData->title;
+        $posts->description = $commandData->description;
         $posts->save();
         return $posts;
     }
