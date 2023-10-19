@@ -1,1 +1,1 @@
-<p>{{$massage}}</p>
+<p>{{$content}}</p>

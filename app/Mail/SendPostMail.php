@@ -12,7 +12,7 @@ class SendPostMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public function __construct(private string $title, private string $content)
+    public function __construct(public string $title, public string $content)
     {
     }
 
@@ -32,7 +32,7 @@ class SendPostMail extends Mailable
             ]
         );
     }
-    
+
     public function attachments(): array
     {
         return [];

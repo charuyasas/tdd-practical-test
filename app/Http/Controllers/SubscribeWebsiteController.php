@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\SubscribeWebsiteRequest;
+use App\Requests\SubscribeWebsiteRequest;
+use App\UseCases\SubscribeWebsiteUseCase;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class SubscribeWebsiteController extends Controller
 {
-    public static function store(SubscribeWebsiteRequest $request)
+    public function store(SubscribeWebsiteRequest $request)
     {
-        return (new \App\UseCase\SubscribeWebsiteUseCase)->execute($request->commandData());
+        return (new SubscribeWebsiteUseCase())->execute(Auth::user(),$request->command());
     }
 }

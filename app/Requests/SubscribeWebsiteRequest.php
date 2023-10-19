@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Requests;
 
 
 use App\Commands\SubscribeUserCommand;
@@ -21,7 +21,7 @@ class SubscribeWebsiteRequest extends FormRequest
         ];
     }
 
-    public function commandData()
+    public function command()
     {
         return new SubscribeUserCommand(
             $this->websiteId,

@@ -1,19 +1,20 @@
 <?php
 
-namespace App\UseCase;
+namespace App\UseCases;
 
-use App\Commands\PostCommand;
-use App\Http\Requests\StorePostRequest;
+use App\Commands\CreatePostCommand;
 use App\Models\Post;
+use App\Models\User;
 
-class StoreWebsiteUseCase
+class StoreWebsitePostUseCase
 {
-    public function execute(PostCommand $commandData)
+    public function execute(User $user, CreatePostCommand $commandData)
     {
         $posts = new Post();
         $posts->website_id = $commandData->websiteId;
         $posts->title = $commandData->title;
         $posts->description = $commandData->description;
+        $posts->user_id = $user->id;
         $posts->save();
         return $posts;
     }

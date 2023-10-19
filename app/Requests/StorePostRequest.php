@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Requests;
 
-use App\Commands\PostCommand;
+use App\Commands\CreatePostCommand;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StorePostRequest extends FormRequest
@@ -16,15 +16,17 @@ class StorePostRequest extends FormRequest
     {
         return [
             'websiteId' => 'required|int',
+            'userId' => 'required|int',
             'title' => 'required|string',
             'description' => 'required|string',
         ];
     }
 
-    public function commandData()
+    public function command()
     {
-        return new PostCommand(
+        return new CreatePostCommand(
             $this->websiteId,
+            $this->userId,
             $this->title,
             $this->description
 
