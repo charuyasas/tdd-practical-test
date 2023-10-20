@@ -5,7 +5,6 @@ namespace Tests\Feature;
 use App\Models\Subscription;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Auth;
 use Tests\TestCase;
 
@@ -13,26 +12,57 @@ class SubscribeWebsiteTest extends TestCase
 {
     use RefreshDatabase;
 
+    public User $user;
+    public Subscription $subscribe;
+
+    public function setUp(): void
+    {
+        parent::setUp();
+        $this->user = User::factory()->create();
+        $this->actingAs($this->user);
+        $this->subscribe = Subscription::factory()->make();
+    }
+
     /** @test */
     public function user_subscribe_website(): void
     {
-        $user = User::factory()->create();
-        $this->actingAs($user);
-        $subscribe = Subscription::factory()->make();
-
-        $this->assertEquals($user->id, Auth::user()->id);
         $this->postJson(
             route('subscribe.store'),
             [
-                'websiteId' => $subscribe->website_id,
-                'userId' => Auth::user()->id
+                'website_id' => $this->subscribe->website_id
             ])->assertCreated()->json();
 
         $this->assertDatabaseHas(
             'subscriptions',
             [
-                'website_id' => $subscribe->website_id,
+                'website_id' => $this->subscribe->website_id,
                 'user_id' => Auth::user()->id
             ]);
+    }
+
+    /**
+     * @test
+     * @dataProvider requiredValidationProvider
+     */
+    public function it_validates_form($formInput, $formInputValue, $massage)
+    {
+        $response = $this->postJson(
+            route(
+                'subscribe.store',
+                [$formInput => $formInputValue]
+            ),
+        );
+
+        $response->assertUnprocessable();
+        $response->assertJsonValidationErrors([$formInput => [$massage]]);
+    }
+
+    public static function requiredValidationProvider(): array
+    {
+        return [
+            ['website_id', '', "The website id field is required."],
+            ['website_id', null, "The website id field is required."],
+            ['website_id', 'abc', "The website id field must be an integer."]
+        ];
     }
 }

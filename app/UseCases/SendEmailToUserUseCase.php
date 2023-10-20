@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Mail;
 
 class SendEmailToUserUseCase
 {
-    public static function execute()
+    public function execute()
     {
         $users = User::join('subscriptions', 'subscriptions.user_id', '=', 'users.id')->get();
         $posts = Post::all();

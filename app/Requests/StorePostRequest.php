@@ -15,8 +15,8 @@ class StorePostRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'websiteId' => 'required|int',
-            'userId' => 'required|int',
+            'website_id' => 'required|int',
+            'user_id' => 'required|int',
             'title' => 'required|string',
             'description' => 'required|string',
         ];
@@ -25,8 +25,8 @@ class StorePostRequest extends FormRequest
     public function command()
     {
         return new CreatePostCommand(
-            $this->websiteId,
-            $this->userId,
+            $this->website_id,
+            $this->user_id,
             $this->title,
             $this->description
 

@@ -49,7 +49,7 @@ class SendPostAlertToUsers extends TestCase
     /** @test */
     public function send_available_post_to_users(): void
     {
-        SendEmailToUserUseCase::execute();
+        (new SendEmailToUserUseCase)->execute();
 
         $subscriptionCount = Subscription::where('website_id', $this->website->id)
             ->where('user_id', $this->user->id)
@@ -71,7 +71,7 @@ class SendPostAlertToUsers extends TestCase
     public function not_sending_duplicate_emails(): void
     {
         for ($x = 0; $x <= 10; $x++) {
-            SendEmailToUserUseCase::execute();
+            (new SendEmailToUserUseCase)->execute();
         }
 
         $subscriptionCount = EmailLog::all()->count();
@@ -79,4 +79,6 @@ class SendPostAlertToUsers extends TestCase
         $this->assertEquals(1, $subscriptionCount);
         Mail::assertQueued(SendPostMail::class, 1);
     }
+
+
 }
