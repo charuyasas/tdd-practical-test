@@ -3,10 +3,13 @@
 namespace App\Requests;
 
 use App\Commands\CreatePostCommand;
+use App\Traits\AuthorizeTrait;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StorePostRequest extends FormRequest
 {
+    use AuthorizeTrait;
+
     public function rules(): array
     {
         return [
