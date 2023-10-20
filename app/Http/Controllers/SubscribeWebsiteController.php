@@ -11,6 +11,6 @@ class SubscribeWebsiteController extends Controller
 {
     public function store(SubscribeWebsiteRequest $request)
     {
-        return (new SubscribeWebsiteUseCase())->execute(Auth::user(),$request);
+        return (new SubscribeWebsiteUseCase())->execute(Auth::user(), $request);
     }
 }

@@ -41,14 +41,15 @@ class CreatePostTest extends TestCase
             'posts',
             [
                 'website_id' => $this->post->website_id,
-                'user_id'=>Auth::user()->id,
+                'user_id' => Auth::user()->id,
                 'title' => $this->post->title,
                 'description' => $this->post->description
             ]);
     }
 
     /** @test */
-    public function validate_empty_record(){
+    public function validate_empty_record()
+    {
         $this->postJson(
             route('posts.store'),
             [

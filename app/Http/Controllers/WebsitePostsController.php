@@ -11,6 +11,6 @@ class WebsitePostsController extends Controller
 {
     public function store(StorePostRequest $request)
     {
-        return (new StoreWebsitePostUseCase())->execute(Auth::user(),$request->command());
+        return (new StoreWebsitePostUseCase())->execute(Auth::user(), $request->command());
     }
 }
