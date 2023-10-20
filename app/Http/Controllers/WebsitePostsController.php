@@ -9,8 +9,8 @@ use Illuminate\Support\Facades\Auth;
 
 class WebsitePostsController extends Controller
 {
-    public function store(StorePostRequest $request)
+    public function store(StorePostRequest $request, StoreWebsitePostUseCase $storeWebsitePostUseCase)
     {
-        return (new StoreWebsitePostUseCase())->execute(Auth::user(), $request->command());
+        return $storeWebsitePostUseCase->execute(Auth::user(), $request->command());
     }
 }

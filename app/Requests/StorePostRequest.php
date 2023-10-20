@@ -7,11 +7,6 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class StorePostRequest extends FormRequest
 {
-    public function authorize(): bool
-    {
-        return true;
-    }
-
     public function rules(): array
     {
         return [
@@ -22,14 +17,13 @@ class StorePostRequest extends FormRequest
         ];
     }
 
-    public function command()
+    public function command(): CreatePostCommand
     {
-        return new CreatePostCommand(
-            $this->website_id,
-            $this->user_id,
-            $this->title,
-            $this->description
-
-        );
+        $command = new CreatePostCommand();
+        $command->website_id = $this->website_id;
+        $command->user_id = $this->user_id;
+        $command->title = $this->title;
+        $command->description = $this->description;
+        return $command;
     }
 }

@@ -2,35 +2,12 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 
-class User extends Model implements Authenticatable
+class User extends Authenticatable
 {
-    use HasFactory;
-
-    public function getAuthIdentifierName()
-    {
-    }
-
-    public function getAuthIdentifier()
-    {
-    }
-
-    public function getAuthPassword()
-    {
-    }
-
-    public function getRememberToken()
-    {
-    }
-
-    public function setRememberToken($value)
-    {
-    }
-
-    public function getRememberTokenName()
-    {
-    }
+    use HasApiTokens, HasFactory, Notifiable;
 }

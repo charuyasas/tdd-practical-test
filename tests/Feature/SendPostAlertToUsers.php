@@ -79,6 +79,4 @@ class SendPostAlertToUsers extends TestCase
         $this->assertEquals(1, $subscriptionCount);
         Mail::assertQueued(SendPostMail::class, 1);
     }
-
-
 }

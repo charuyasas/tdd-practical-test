@@ -10,10 +10,10 @@ use App\Requests\SubscribeWebsiteRequest;
 
 class SubscribeWebsiteUseCase
 {
-    public function execute(User $user, SubscribeWebsiteRequest $request)
+    public function execute(User $user, Website $website)
     {
         $subscribe = new Subscription();
-        $subscribe->website_id = $request->websiteId;
+        $subscribe->website_id = $website->id;
         $subscribe->user_id = $user->id;
         $subscribe->save();
         return $subscribe;

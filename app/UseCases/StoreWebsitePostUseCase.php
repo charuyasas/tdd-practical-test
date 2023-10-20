@@ -11,7 +11,7 @@ class StoreWebsitePostUseCase
     public function execute(User $user, CreatePostCommand $command)
     {
         $posts = new Post();
-        $posts->website_id = $command->websiteId;
+        $posts->website_id = $command->website_id;
         $posts->title = $command->title;
         $posts->description = $command->description;
         $posts->user_id = $user->id;

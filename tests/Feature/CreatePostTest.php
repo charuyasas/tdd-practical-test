@@ -5,7 +5,6 @@ namespace Tests\Feature;
 use App\Models\Post;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Auth;
 use Tests\TestCase;
 
@@ -32,7 +31,7 @@ class CreatePostTest extends TestCase
             route('posts.store'),
             [
                 'website_id' => $this->post->website_id,
-                'userId' => Auth::user()->id,
+                'user_id' => Auth::user()->id,
                 'title' => $this->post->title,
                 'description' => $this->post->description
             ])->assertCreated()->json();
@@ -82,10 +81,10 @@ class CreatePostTest extends TestCase
             ['website_id', '', "The website id field is required."],
             ['website_id', null, "The website id field is required."],
             ['website_id', 'abc', "The website id field must be an integer."],
-            ['title', '', "The website id field is required."],
-            ['title', null, "The website id field is required."],
-            ['description', '', "The website id field is required."],
-            ['description', null, "The website id field is required."],
+            ['title', '', "The title field is required."],
+            ['title', null, "The title field is required."],
+            ['description', '', "The description field is required."],
+            ['description', null, "The description field is required."],
         ];
     }
 }
