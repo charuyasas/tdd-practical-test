@@ -29,7 +29,6 @@ class CreatePostTest extends TestCase
     /** @test */
     public function store_new_post()
     {
-        $this->withoutExceptionHandling();
         $this->assertEquals($this->user->id, Auth::user()->id);
         $this->postJson(
             route('posts.store', ['website' => $this->website->id]),
