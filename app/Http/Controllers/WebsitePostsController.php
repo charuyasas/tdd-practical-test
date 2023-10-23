@@ -3,15 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Models\Website;
-use App\Requests\StorePostRequest;
+use App\Requests\StorePostRequestAuthorized;
 use App\UseCases\StoreWebsitePostUseCase;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 
 class WebsitePostsController extends Controller
 {
-    public function store(StorePostRequest $request, StoreWebsitePostUseCase $storeWebsitePostUseCase, Website $website)
+    public function store(StorePostRequestAuthorized $request, StoreWebsitePostUseCase $storeWebsitePostUseCase, Website $website)
     {
-        return $storeWebsitePostUseCase->execute(Auth::user(), $website, $request->command());
+        return $storeWebsitePostUseCase->execute(Auth::user(), $request->command());
     }
 }

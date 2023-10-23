@@ -9,13 +9,13 @@ use App\Models\Website;
 
 class StoreWebsitePostUseCase
 {
-    public function execute(User $user, Website $website, CreatePostCommand $command)
+    public function execute(User $user, CreatePostCommand $command)
     {
         $posts = new Post();
-        $posts->user_id = $user->id;
-        $posts->website_id = $website->id;
+        $posts->website_id = $command->website->id;
         $posts->title = $command->title;
         $posts->description = $command->description;
+        $posts->user_id = $user->id;
         $posts->save();
 
         return $posts;

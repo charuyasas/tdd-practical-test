@@ -3,13 +3,10 @@
 namespace App\Requests;
 
 use App\Commands\CreatePostCommand;
-use App\Traits\AuthorizeTrait;
 use Illuminate\Foundation\Http\FormRequest;
 
-class StorePostRequest extends FormRequest
+class StorePostRequestAuthorized extends AuthorizedFormRequest
 {
-    use AuthorizeTrait;
-
     public function rules(): array
     {
         return [
@@ -21,6 +18,7 @@ class StorePostRequest extends FormRequest
     public function command(): CreatePostCommand
     {
         $command = new CreatePostCommand();
+        $command->website = $this->website;
         $command->title = $this->title;
         $command->description = $this->description;
 
