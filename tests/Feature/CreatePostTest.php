@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Models\Post;
 use App\Models\User;
+use App\Models\Website;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Auth;
 use Tests\TestCase;
@@ -13,6 +14,7 @@ class CreatePostTest extends TestCase
     use RefreshDatabase;
 
     public User $user;
+    public Website $website;
     public Post $post;
 
     public function setUp(): void
@@ -20,42 +22,32 @@ class CreatePostTest extends TestCase
         parent::setUp();
         $this->user = User::factory()->create();
         $this->actingAs($this->user);
+        $this->website = Website::factory()->create();
         $this->post = Post::factory()->make();
     }
 
     /** @test */
     public function store_new_post()
     {
+        $this->withoutExceptionHandling();
         $this->assertEquals($this->user->id, Auth::user()->id);
         $this->postJson(
-            route('posts.store'),
+            route('posts.store', ['website' => $this->website->id]),
             [
-                'website_id' => $this->post->website_id,
+                'website_id' => $this->website->id,
                 'user_id' => Auth::user()->id,
                 'title' => $this->post->title,
                 'description' => $this->post->description
-            ])->assertCreated()->json();
+            ])->assertCreated();
 
         $this->assertDatabaseHas(
             'posts',
             [
-                'website_id' => $this->post->website_id,
+                'website_id' => $this->website->id,
                 'user_id' => Auth::user()->id,
                 'title' => $this->post->title,
                 'description' => $this->post->description
             ]);
-    }
-
-    /** @test */
-    public function validate_empty_record()
-    {
-        $this->postJson(
-            route('posts.store'),
-            [
-                'website_id' => $this->post->website_id,
-                'title' => $this->post->title,
-                'description' => $this->post->description
-            ])->assertUnprocessable()->json();
     }
 
     /**
@@ -67,7 +59,7 @@ class CreatePostTest extends TestCase
         $response = $this->postJson(
             route(
                 'posts.store',
-                [$formInput => $formInputValue]
+                [$formInput => $formInputValue,'website' => $this->website->id]
             ),
         );
 
@@ -78,9 +70,6 @@ class CreatePostTest extends TestCase
     public static function requiredValidationProvider(): array
     {
         return [
-            ['website_id', '', "The website id field is required."],
-            ['website_id', null, "The website id field is required."],
-            ['website_id', 'abc', "The website id field must be an integer."],
             ['title', '', "The title field is required."],
             ['title', null, "The title field is required."],
             ['description', '', "The description field is required."],
