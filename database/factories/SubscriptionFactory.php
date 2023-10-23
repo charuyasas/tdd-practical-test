@@ -4,14 +4,13 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class UserFactory extends Factory
+class SubscriptionFactory extends Factory
 {
     public function definition(): array
     {
         return [
-            'name' => $this->faker->name,
-            'email' => $this->faker->email,
-            'password' => $this->faker->password
+            'website_id' => $this->faker->randomNumber(5, false),
+            'user_id' => $this->faker->randomNumber(5, false),
         ];
     }
 }
